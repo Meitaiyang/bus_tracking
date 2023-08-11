@@ -18,3 +18,15 @@ def test_json_data(client):
     response = client.get('/test/')
     res = json.loads(response.data.decode('utf-8')).get("message")
     assert res == "test message"
+
+def test_bus(client):
+    response = client.get('/bus/1/')
+    print(response.json())
+    """
+    if response.status_code == 404:
+        res = json.loads(response.data.decode('utf-8')).get("error")
+        assert response.json()["error"] == "Bus not found"
+    else:
+        res = json.loads(response.data.decode('utf-8')).get("message")
+        assert res == "Hello, World!"
+    """
