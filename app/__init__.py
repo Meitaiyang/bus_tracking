@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, jsonify
 
 from config import Config
 from app.extensions import db
@@ -25,6 +25,5 @@ def create_app(config_class=Config):
 
     @app.route('/test/')
     def test_page():
-        return '<h1>Testing the Flask Application Factory Pattern</h1>'
-
+        return jsonify({'message': 'test message'})
     return app
