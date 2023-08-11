@@ -4,7 +4,9 @@ from config import Config
 from app.extensions import db
 
 # need to import the model to create the table
-# from app.models.instruments import Instruments
+from app.models.buses import Buses
+from app.models.stations import Stations
+from app.models.bus_station_mapping import BusStationMapping
 
 def create_app(config_class=Config):
     app = Flask(__name__)
