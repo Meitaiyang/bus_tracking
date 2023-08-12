@@ -8,3 +8,9 @@ services:
     environment:
       - FLASK_ENV=development
       - FLASK_APP=app
+
+  test:
+    build: .
+    command: pytest
+    depends_on:
+      - web
