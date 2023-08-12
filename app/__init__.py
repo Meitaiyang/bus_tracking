@@ -8,6 +8,8 @@ from app.models.buses import Buses
 from app.models.stations import Stations
 from app.models.bus_station_mapping import BusStationMapping
 
+from app.data_seeder import insert_simulation_data, simulation_data
+
 def create_app(config_class=Config):
     app = Flask(__name__)
     app.config.from_object(config_class)
@@ -18,6 +20,8 @@ def create_app(config_class=Config):
     # Create the table if it doesn't exist
     with app.app_context():
         db.create_all()
+        if not Buses.query.first():
+            insert_simulation_data(simulation_data)
 
     # Register blueprints here
     from app.main import bp as main_bp
