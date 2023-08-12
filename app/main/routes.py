@@ -1,13 +1,35 @@
 from flask import jsonify
 from app.main import bp
 from app.extensions import db
+from app.models.buses import Buses
+from app.models.stations import Stations
 from app.models.bus_station_mapping import BusStationMapping
 
-@bp.route('/bus/<bus_number>')
+@bp.route('/bus/<string:bus_number>')
 def index(bus_number):
     
-    # search the bus and arrive time in BusStationMapping table
-    bus_station_mapping = BusStationMapping.query.filter_by(bus_number=bus_number).all()
-    if not bus_station_mapping:
+    # search the bus number in the database
+    bus = Buses.query.filter_by(bus_number=str(bus_number)).first()
+
+    if not bus:
         return jsonify({'message': 'bus not found'}), 404
-    return jsonify({'bus_number': bus_number, 'arrive_time': [mapping.arrival_time for mapping in bus_station_mapping]}), 200
+
+    # get the bus station mapping
+    bus_station_mapping = BusStationMapping.query.filter_by(bus_id=bus.bus_id).all()
+
+    # get the station name from the station id
+    for mapping in bus_station_mapping:
+        station = Stations.query.filter_by(station_id=mapping.station_id).first()
+        mapping.station_name = station.station_name
+    
+
+    return jsonify({
+        'bus_number': bus_number, 
+        'direction':bus.direction,
+        'schedule': 
+        [
+            {'station_name':mapping.station_name, 
+            'arrival_time':mapping.arrival_time.strftime('%H:%M')} 
+            for mapping in bus_station_mapping
+        ]
+        }), 200

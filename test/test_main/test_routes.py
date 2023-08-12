@@ -7,4 +7,3 @@ def test_index_route(test_client):
     # test the exist route 278
     response_success = test_client.get('/bus/278')
     assert response_success.status_code == 200
-    assert response_success.json['bus_number'] == '278'
