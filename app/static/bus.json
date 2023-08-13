@@ -16,9 +16,9 @@
         "bus_number": "278",
         "direction": "捷運景美",
         "schedule": [
-            {"station_name": "內湖國小", "arrival_time": "9:00"},
-            {"station_name": "捷運文德站(碧湖公園)", "arrival_time": "9:20"},
-            {"station_name": "三總內湖站", "arrival_time": "9:40"},
+            {"station_name": "內湖國小", "arrival_time": "09:00"},
+            {"station_name": "捷運文德站(碧湖公園)", "arrival_time": "09:20"},
+            {"station_name": "三總內湖站", "arrival_time": "09:40"},
             {"station_name": "時報廣場", "arrival_time": "10:00"},
             {"station_name": "新東街口", "arrival_time": "10:20"},
             {"station_name": "長壽公園", "arrival_time": "10:40"},
