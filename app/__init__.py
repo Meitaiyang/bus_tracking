@@ -2,6 +2,7 @@ from flask import Flask, jsonify
 
 from config import Config
 from app.extensions import db
+from app.extensions import celery
 
 # need to import the model to create the table
 from app.models.buses import Buses
@@ -16,6 +17,8 @@ def create_app(config_class=Config):
 
     # Initialize Flask extensions here
     db.init_app(app)
+
+    celery.conf.update(app.config)
 
     # Create the table if it doesn't exist
     with app.app_context():
