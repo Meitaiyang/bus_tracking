@@ -1,11 +1,11 @@
 from flask import jsonify
-from app.main import bp
+from app.bus import bp
 from app.extensions import db
 from app.models.buses import Buses
 from app.models.stations import Stations
 from app.models.bus_station_mapping import BusStationMapping
 
-@bp.route('/bus/<string:bus_number>')
+@bp.route('/<string:bus_number>')
 def index(bus_number):
     
     # search the bus number in the database
