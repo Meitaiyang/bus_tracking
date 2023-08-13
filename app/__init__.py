@@ -27,8 +27,8 @@ def create_app(config_class=Config):
             insert_simulation_data()
 
     # Register blueprints here
-    from app.main import bp as main_bp
-    app.register_blueprint(main_bp)
+    from app.bus import bp as bus_bp
+    app.register_blueprint(bus_bp, url_prefix='/bus')
 
     @app.route('/test/')
     def test_page():
