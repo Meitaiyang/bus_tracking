@@ -1,8 +1,7 @@
 from flask import Flask, jsonify
 
 from config import Config
-from app.extensions import db
-from app.extensions import celery
+from app.extensions import db, celery_init_app
 
 # need to import the model to create the table
 from app.models.buses import Buses
@@ -18,7 +17,15 @@ def create_app(config_class=Config):
     # Initialize Flask extensions here
     db.init_app(app)
 
-    celery.conf.update(app.config)
+    app.config.from_mapping(
+        CELERY=dict(
+            broker_url="redis",
+            result_backend="redis",
+            task_ignore_result=True,
+        ),
+    )
+    app.config.from_prefixed_env()
+    celery_init_app(app)
 
     # Create the table if it doesn't exist
     with app.app_context():
@@ -29,6 +36,9 @@ def create_app(config_class=Config):
     # Register blueprints here
     from app.bus import bp as bus_bp
     app.register_blueprint(bus_bp, url_prefix='/bus')
+
+    from app.subscribe import bp as subscribe_bp
+    app.register_blueprint(subscribe_bp, url_prefix='/subscribe')
 
     @app.route('/test/')
     def test_page():

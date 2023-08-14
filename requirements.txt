@@ -2,3 +2,5 @@ flask
 flask-SQLAlchemy
 flask-login
 pytest
+celery
+redis

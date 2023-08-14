@@ -14,3 +14,6 @@ services:
     command: pytest
     depends_on:
       - web
+
+  redis:
+    image: "redis:latest"
