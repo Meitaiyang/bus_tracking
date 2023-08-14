@@ -8,5 +8,5 @@ from app.subscribe.task import add_together
 def start_add():
     a = request.form.get("a", type=int)
     b = request.form.get("b", type=int)
-    result = add_together.delay(a, b)
+    result = 
     return {"result_id": result.id}
