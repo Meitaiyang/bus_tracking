@@ -19,8 +19,8 @@ def create_app(config_class=Config):
 
     app.config.from_mapping(
         CELERY=dict(
-            broker_url="redis",
-            result_backend="redis",
+            broker_url="redis://redis:6379/",
+            result_backend="redis://redis:6379/",
             task_ignore_result=True,
         ),
     )
