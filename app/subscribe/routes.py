@@ -1,12 +1,10 @@
 from flask import jsonify, request
 from app.subscribe import bp
 from app.extensions import db
-from app.subscribe.task import add_together
+from app.subscribe.task import check_users
 
 
 @bp.route('/add')
 def start_add():
-    a = request.form.get("a", type=int)
-    b = request.form.get("b", type=int)
-    result = 
-    return {"result_id": result.id}
+    result = check_users.delay()
+    return jsonify({"result_id": result.id})

@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "5050:5050"
+    environment:
+      - FLASK_ENV=development 
+      - FLASK_APP=app
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    links:
+      - redis
+    depends_on:
+      - redis
+
+  celery:
+    build: .
+    command:  celery -A app.subscribe.task worker -l info -B
+    links:
+      - redis
+    depends_on:
+      - redis
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+
+  test:
+    build: .
+    command: pytest
+    depends_on:
+      - web
+
+  redis:
+    image: "redis:alpine"
+    hostname: redis
+    ports:
+      - "6379:6379"
+
