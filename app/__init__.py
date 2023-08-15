@@ -5,9 +5,7 @@ from celery import Task
 from app.extensions import db, celery
 
 # need to import the model to create the table
-from app.models.buses import Buses
-from app.models.stations import Stations
-from app.models.bus_station_mapping import BusStationMapping
+from app.models.user import Users
 
 def create_app(config_class=Config):
     app = Flask(__name__)
