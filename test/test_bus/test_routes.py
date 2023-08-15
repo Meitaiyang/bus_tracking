@@ -19,7 +19,7 @@ def test_index_route(test_client):
                 test_dict = item
                 break
 
-    response_success = test_client.get('/bus/278')
+    response_success = test_client.get('/bus/672')
     assert response_success.status_code == 200
 
     # test the response data json

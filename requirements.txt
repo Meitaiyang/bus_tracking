@@ -4,3 +4,4 @@ flask-login
 pytest
 celery[redis]
 redis
+requests

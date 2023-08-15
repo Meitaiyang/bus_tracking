@@ -12,4 +12,4 @@ def check_users():
 # Run the check_users task every minute
 @celery.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
-    sender.add_periodic_task(3.0, check_users.s())
+    sender.add_periodic_task(15.0, check_users.s())
