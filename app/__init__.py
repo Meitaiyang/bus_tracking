@@ -13,6 +13,10 @@ def create_app(config_class=Config):
 
     # Initialize Flask extensions here
     db.init_app(app)
+    
+    # Create the table if it doesn't exist
+    with app.app_context():
+        db.create_all()
 
     app.config.from_mapping(
         CELERY=dict(
@@ -29,10 +33,7 @@ def create_app(config_class=Config):
     celery.set_default()
     app.extensions["celery"] = celery
 
-    # Create the table if it doesn't exist
-    with app.app_context():
-        db.create_all()
-
+    
     # Register blueprints here
     from app.bus import bp as bus_bp
     app.register_blueprint(bus_bp, url_prefix='/bus')
