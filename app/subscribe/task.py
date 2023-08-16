@@ -24,16 +24,8 @@ def check_users():
         # check if the time difference is less than 3 minutes
         if time_diff < 180:
 
-            response = requests.post(f"http://172.23.0.3:5050/subscribe/mail/{user['user_id']}")
-            # create a new email message
-            # msg = Message('Bus Arrival Alert', sender='shrek473@gmail.com', recipients=[user['email']])
-            # msg.body = f"The bus number {user['bus_number']} is arriving at station {user['station']} in {time_diff} minutes."
-
-            # send the email
-            # mail.send(msg)
-            print("mail send")
-            print(user)
-            response = requests.delete(f"http://172.23.0.3:5050/subscribe/delete/{user['user_id']}")
+            # requests.post(f"http://172.23.0.3:5050/subscribe/mail/{user['user_id']}")
+            requests.delete(f"http://172.23.0.3:5050/subscribe/delete/{user['user_id']}")
 
 # Run the check_users task every minute
 @celery.on_after_configure.connect
