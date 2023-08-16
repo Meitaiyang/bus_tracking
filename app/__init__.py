@@ -2,7 +2,7 @@ from flask import Flask, jsonify
 
 from config import Config
 from celery import Task
-from app.extensions import db, celery
+from app.extensions import db, celery, mail
 
 # need to import the model to create the table
 from app.models.user import Users
@@ -13,6 +13,7 @@ def create_app(config_class=Config):
 
     # Initialize Flask extensions here
     db.init_app(app)
+    mail.init_app(app)
     
     # Create the table if it doesn't exist
     with app.app_context():
