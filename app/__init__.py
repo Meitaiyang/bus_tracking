@@ -2,14 +2,10 @@ from flask import Flask, jsonify
 
 from config import Config
 from celery import Task
-from app.extensions import db, celery
+from app.extensions import db, celery, mail
 
 # need to import the model to create the table
-from app.models.buses import Buses
-from app.models.stations import Stations
-from app.models.bus_station_mapping import BusStationMapping
-
-from app.data_seeder import insert_simulation_data
+from app.models.user import Users
 
 def create_app(config_class=Config):
     app = Flask(__name__)
@@ -17,6 +13,11 @@ def create_app(config_class=Config):
 
     # Initialize Flask extensions here
     db.init_app(app)
+    mail.init_app(app)
+    
+    # Create the table if it doesn't exist
+    with app.app_context():
+        db.create_all()
 
     app.config.from_mapping(
         CELERY=dict(
@@ -33,12 +34,7 @@ def create_app(config_class=Config):
     celery.set_default()
     app.extensions["celery"] = celery
 
-    # Create the table if it doesn't exist
-    with app.app_context():
-        db.create_all()
-        if not Buses.query.first():
-            insert_simulation_data()
-
+    
     # Register blueprints here
     from app.bus import bp as bus_bp
     app.register_blueprint(bus_bp, url_prefix='/bus')
