@@ -16,7 +16,7 @@ Before running the application, there are several steps you need to take:
 4. Run the application :`docker-compose up --build`
 
 
-## Features
+## Usage
 
 1. **Real-time Bus Information**: Send a request to `127.0.0.1/bus/<bus_number>` to receive real-time bus information. This includes the bus number, direction, and estimated arrival times for each stop. For a sample payload, refer to `bus_simulation.json`.
 2. **Email Notification Subscription**: Send a request to `127.0.0.1/subscribe/<email>/<bus_number>/<direction>/<station>` to subscribe to notifications for a specific bus stop. You'll receive an email notification 3 minutes before the bus arrives at your subscribed stop. To see an example of a user's subscription payload, refer to `user_simulation.json`.
