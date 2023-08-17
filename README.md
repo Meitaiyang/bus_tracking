@@ -6,13 +6,14 @@ A Flask-based application designed to track all buses in Taipei City. The applic
 
 Before running the application, there are several steps you need to take:
 
-1. Register for a dedicated API key at the [TDX Transport Data Exchange Service Platform](https://tdx.transportdata.tw/). Additionally, register for the Gmail email sending service to obtain the necessary credentials.
-2. Fill in your private credentials in the `app.env.dev` file. Once done, rename `app.env.dev` to `app.env`. The `app.env` file should contain:
+1. Register for a dedicated API key at the [TDX Transport Data Exchange Service Platform](https://tdx.transportdata.tw/). 
+2. Register for the Gmail email sending service to obtain the necessary credentials.
+3. Fill in your private credentials in the `app.env.dev` file. Once done, rename `app.env.dev` to `app.env`. The `app.env` file should contain:
     - `BUS_APP_ID`: Your API ID from the TDX platform
     - `BUS_APP_KEY`: Your API Key from the TDX platform
-    - `MAIL_USERNAME`: Your registered Gmail username
-    - `MAIL_PASSWORD`: Your Gmail password
-3. Run the application using the following command:`docker-compose up --build`
+    - `MAIL_USERNAME`: Your registered Gmail service username
+    - `MAIL_PASSWORD`: Your Gmail service register password
+4. Run the application :`docker-compose up --build`
 
 
 ## Features
