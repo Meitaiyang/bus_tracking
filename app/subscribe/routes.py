@@ -1,17 +1,25 @@
-from flask import jsonify, request
+import re
 from datetime import datetime
+from flask import jsonify, request
 from flask_mail import Message
 from app.subscribe import bp
 from app.extensions import db, mail
 from app.models.user import Users
 from app.api import call_api
 
+EMAIL_REGEX = re.compile(r"[^@]+@[^@]+\.[^@]+")
+
 @bp.route('/<string:email>/<string:bus_number>/<string:direction>/<string:station>')
 def subscribe(email, bus_number, direction, station):
+
+    # check if the email is valid
+    if not EMAIL_REGEX.match(email):
+        return jsonify({"error": "Invalid Email"}), 400
     
     # check if the bus, direction and station are valid
     result = call_api(bus_number) 
 
+    # if the bus is not found
     if not result:
         return jsonify({"error": "Bus not Found"}), 404   
 
