@@ -16,8 +16,6 @@ def check_users():
         # get the current system time in seconds
         current_time = int(datetime.now().timestamp())
 
-        print("\n\n\n",current_time,"\n\n\n")
-    
         # calculate the time difference in minutes
         time_diff = user['estimated_time'] - current_time
 
@@ -25,9 +23,10 @@ def check_users():
         if time_diff < 180:
 
             # requests.post(f"http://172.23.0.3:5050/subscribe/mail/{user['user_id']}")
+            print("email sent")
             requests.delete(f"http://172.23.0.3:5050/subscribe/delete/{user['user_id']}")
 
 # Run the check_users task every minute
 @celery.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
-    sender.add_periodic_task(3.0, check_users.s())
+    sender.add_periodic_task(60.0, check_users.s())
