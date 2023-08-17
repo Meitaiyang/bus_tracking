@@ -66,9 +66,11 @@ def delete_user(user_id):
 
 @bp.route('/mail/<int:user_id>', methods=['POST'])
 def send_mail(user_id):
-    create a new email message
-    msg = Message('Bus Arrival Alert', sender='shrek473@gmail.com', recipients=[user['email']])
-    msg.body = f"The bus number {user['bus_number']} is arriving at station {user['station']} in {time_diff} minutes."
+    # create a new email message
 
-    send the email
+    user = Users.query.get_or_404(user_id)
+    msg = Message('Bus Arrival Alert', sender='gmail.com', recipients=[user.email])
+    msg.body = f"The bus number {user['bus_number']} is arriving at station {user.station} in less than 3 minutes."
+
+    # send the email
     mail.send(msg)

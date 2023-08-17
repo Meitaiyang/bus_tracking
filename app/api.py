@@ -1,9 +1,14 @@
 import requests
 import json
 from flask import jsonify
+import os
+from dotenv import load_dotenv, find_dotenv
 
-app_id = 'shrek473-b2142b35-f284-4f3a'
-app_key = 'b03f7216-1d9f-4f04-ab5d-bcde430f0362'
+env_file = find_dotenv("/project/app.env")
+load_dotenv(env_file)
+
+app_id = os.getenv('BUS_APP_ID')
+app_key = os.getenv('BUS_APP_KEY')
 
 auth_url="https://tdx.transportdata.tw/auth/realms/TDXConnect/protocol/openid-connect/token"
 
