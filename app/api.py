@@ -67,37 +67,38 @@ def call_api(bus_number):
         return result
 
     for route in Route:
-        bus_num = route["RouteName"]["Zh_tw"]
-        for direction in [0, 1]:
-            stops_for_route_direction = [stop for stop in Stop if stop["RouteID"] == route["RouteID"] and stop["Direction"] == direction]
-            # If no stops found for this direction, continue
-            if not stops_for_route_direction:
-                continue
-            
-            if direction == 0:
-                direction_name = route["DestinationStopNameZh"]
-            else:
-                direction_name = route["DepartureStopNameZh"]
-
-            schedule = []
-            for stop_entry in stops_for_route_direction:
-                for stop in stop_entry["Stops"]:
-                    stop_id = stop["StopID"]
-                    stop_name = stop["StopName"]["Zh_tw"]
-                    estimated_time = None
-
-                    # Find the estimated time for the stop
-                    for estimate in Estimated:
-                        if "EstimateTime" in estimate and estimate["RouteID"] == route["RouteID"] and estimate["StopID"] == stop_id:
-                            estimated_time = estimate["EstimateTime"]
-                            break
-
-                    # If estimated time is not found, set it as -1 (indicating 'Not Available')
-                    if estimated_time is None:
-                        estimated_time = "Not Available"
-
-                    schedule.append({"station_name": stop_name, "arrival_time": estimated_time})
-
-            result.append({"bus_number": bus_num, "direction": direction_name, "schedule": schedule})
-
+        if bus_number == route["RouteName"]["Zh_tw"]:
+            bus_num = route["RouteName"]["Zh_tw"]
+            for direction in [0, 1]:
+                stops_for_route_direction = [stop for stop in Stop if stop["RouteID"] == route["RouteID"] and stop["Direction"] == direction]
+                # If no stops found for this direction, continue
+                if not stops_for_route_direction:
+                    continue
+                
+                if direction == 0:
+                    direction_name = route["DestinationStopNameZh"]
+                else:
+                    direction_name = route["DepartureStopNameZh"]
+    
+                schedule = []
+                for stop_entry in stops_for_route_direction:
+                    for stop in stop_entry["Stops"]:
+                        stop_id = stop["StopID"]
+                        stop_name = stop["StopName"]["Zh_tw"]
+                        estimated_time = None
+    
+                        # Find the estimated time for the stop
+                        for estimate in Estimated:
+                            if "EstimateTime" in estimate and estimate["RouteID"] == route["RouteID"] and estimate["StopID"] == stop_id:
+                                estimated_time = estimate["EstimateTime"]
+                                break
+                            
+                        # If estimated time is not found, set it as -1 (indicating 'Not Available')
+                        if estimated_time is None:
+                            estimated_time = "Not Available"
+    
+                        schedule.append({"station_name": stop_name, "arrival_time": estimated_time})
+    
+                result.append({"bus_number": bus_num, "direction": direction_name, "schedule": schedule})
+    
     return result

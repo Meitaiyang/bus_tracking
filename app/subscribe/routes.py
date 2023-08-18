@@ -28,6 +28,8 @@ def subscribe(email, bus_number, direction, station):
         if bus["direction"] == direction:
             for stop in bus["schedule"]:
                 if stop["station_name"] == station:
+                    if stop["arrival_time"] == "Not Available":
+                        return jsonify({"error": "No Bus on Route"}), 404
                     estimated_time = stop["arrival_time"] + int(datetime.now().timestamp())
                     break
             else:
