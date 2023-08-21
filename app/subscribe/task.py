@@ -8,7 +8,7 @@ from app.models.user import Users
 def check_users():
     # send the request to route "/user"
     headers = {'Connection': 'close', 'Content-Type': 'application/json'}
-    response = requests.get("http://172.23.0.3:5050/subscribe/user")
+    response = requests.get("http://web:5050/subscribe/user")
     # get the response data
     data = response.json()
     
@@ -24,9 +24,9 @@ def check_users():
 
             # requests.post(f"http://172.23.0.3:5050/subscribe/mail/{user['user_id']}")
             print("email sent")
-            requests.delete(f"http://172.23.0.3:5050/subscribe/delete/{user['user_id']}")
+            requests.delete(f"http://web:5050/subscribe/delete/{user['user_id']}")
 
 # Run the check_users task every minute
 @celery.on_after_configure.connect
 def setup_periodic_tasks(sender, **kwargs):
-    sender.add_periodic_task(60.0, check_users.s())
+    sender.add_periodic_task(3.0, check_users.s())
